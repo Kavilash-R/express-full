@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import useAuth from "./routes/authRoute.js";
 const app = express();
@@ -44,6 +44,17 @@ app.get("/api/users/:id", (req, res) => {
   if (!findUser) return res.status(404).sendStatus(404);
 
   return res.send(findUser);
+});
+
+//post request
+app.post("/api/users", (req, res) => {
+  const { body } = req;
+  const newUser = {
+    id: Users.length + 1,
+    ...body,
+  };
+  Users.push(newUser);
+  return res.sendStatus(201);
 });
 
 //put request = in this will update the entire field in the user object if not then other fields will be deleted
